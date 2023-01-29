@@ -12,11 +12,9 @@ require("dotenv").config();
 app.use("/css", express.static("./public/css"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(expressLayouts);
 
 app.set("view engine", "ejs");
 app.set("View", "./Views");
-// app.use('/api/chart', chart)
 
 app.get("/", home.getHomedata);
 app.get("/experience", experience.getData);
