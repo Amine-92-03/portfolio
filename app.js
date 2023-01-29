@@ -13,6 +13,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 require("dotenv").config();
 
-app.use(express.static("./client/portfolio/build"));
+app.use(express.static("./client"));
 
 module.exports = app;
