@@ -1,10 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-// const chart = require("./routes/chartRoute");
-// const histo = require("./routes/histoRoute");
-// const etatSys = require("./routes/etatSysRoute");
-// const stat = require("./routes/statRoute");
+const home = require("./Controllers/home");
+
+app.set("views", "./views");
+app.set("view engine", "ejs");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,6 +13,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 require("dotenv").config();
 
-app.use(express.static("./client"));
+app.get("/", home.getHomedata);
+
+
+// app.use(express.static("./client"));
 
 module.exports = app;
