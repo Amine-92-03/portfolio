@@ -1,9 +1,17 @@
 <%- include('layout/header') %>
+
 <div class="container">
   <div class="row">
-    <div class="col">
-      <h1>Mes infos</h1>
+    <div class="col" id="testId">
+      <script>
+        var insertH1 = "";
+        for (let index = 0; index < 5; index++) {
+          insertH1 += "<h1>Mes infos</h1> <%= title %>";
+        }
+        document.getElementById("testId").innerHTML = insertH1;
+      </script>
     </div>
   </div>
 </div>
+
 <%- include('layout/footer') %>
