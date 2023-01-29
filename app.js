@@ -5,7 +5,7 @@ const home = require("./Controllers/homeController");
 const experience = require("./Controllers/experienceController");
 const etudes = require("./Controllers/etudesController");
 const about = require("./Controllers/aboutController");
-
+const conatct = require("./Controllers/contactController");
 // const expressLayouts = require("express-ejs-layouts");
 require("dotenv").config();
 
@@ -22,6 +22,7 @@ app.get("/", home.getHomedata);
 app.get("/experience", experience.getData);
 app.get("/etudes", etudes.getData);
 app.get("/about", about.getData);
+app.get("/conatct", conatct.getData);
 
 // app.get("/about", home.getAboutata);
 
