@@ -2,6 +2,8 @@ const http = require("http");
 const app = require("./app");
 const mongoose = require("mongoose");
 const server = http.createServer(app);
+const nodemailer = require("nodemailer");
+
 require("dotenv").config();
 
 const serverPort = process.env.PORT || 5000;
@@ -26,3 +28,5 @@ mongoose
   .catch((err) => {
     console.log("Error in the Connection");
   });
+
+

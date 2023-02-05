@@ -139,7 +139,7 @@
           "danger",
           `Problème d'enregistrement sur le serveur ! refaites la saisi du formulaire ou essayer de me joindre sur : +33 999 999 999`
         );
-        contactForm.reset();
+        // contactForm.reset();
       }
 
       if (json.status_code === 201) {
@@ -147,6 +147,7 @@
           "info",
           `Cette adresse e-mail déja existe sur nos bases! essayez avec une autre adresse email!`
         );
+
         document.getElementById("inputEmail").style.backgroundColor = "#77b5fe";
 
         checBx.checked = true;

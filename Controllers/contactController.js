@@ -1,6 +1,6 @@
 const mongoDb = require("mongodb");
 const contactModel = require("../Models/contactModel");
-
+const sendGmailNotif = require("../sendMail");
 // console.log(new Date("2023-02-05T16:25:06.826Z").toLocaleTimeString());
 
 module.exports.getPageContact = async (req, res) => {
@@ -9,13 +9,8 @@ module.exports.getPageContact = async (req, res) => {
 };
 
 module.exports.saveContactData = async (req, res) => {
-  // console.log(Object.keys(req.body.data).length);
-  let dataContactForm = req.body.data;
-
   let email = req.body.data.email.toLowerCase();
-  // console.log(req.body.data.dateSaved);
   // check if email exists ?
-
   let resp = await contactModel.findIfEmailExits(email);
   if (resp !== null) {
     try {
@@ -31,7 +26,20 @@ module.exports.saveContactData = async (req, res) => {
   }
 
   try {
-    contactModel.CreateNewContact(req.body.data);
+    let dataToSave = req.body.data;
+    contactModel.CreateNewContact(dataToSave);
+
+    sendGmailNotif({
+      firstLatsName: dataToSave.firstLatsName,
+      email: dataToSave.email,
+      companyName: dataToSave.companyName,
+      Country: dataToSave.Country,
+      city: dataToSave.city,
+      phoneNumber: dataToSave.phoneNumber,
+      text: dataToSave.text,
+      dateSaved: dataToSave.dateSaved,
+    });
+
     return res.status(200).json({
       status_code: 200,
       message: "save contact to db with success",
