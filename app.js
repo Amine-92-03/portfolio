@@ -7,7 +7,6 @@ const etudes = require("./Controllers/etudesController");
 const about = require("./Controllers/aboutController");
 const conatct = require("./Controllers/contactController");
 // const expressLayouts = require("express-ejs-layouts");
-require("dotenv").config();
 
 app.use("/css", express.static("./public/css"));
 app.use(bodyParser.json());
@@ -20,10 +19,7 @@ app.get("/", home.getHomedata);
 app.get("/experience", experience.getData);
 app.get("/etudes", etudes.getData);
 app.get("/about", about.getData);
-app.get("/conatct", conatct.getData);
-
-// app.get("/about", home.getAboutata);
-
-// app.use(express.static("./client"));
+app.get("/contact", conatct.getPageContact);
+app.post("/conatct/saveContact", conatct.saveContactData);
 
 module.exports = app;
