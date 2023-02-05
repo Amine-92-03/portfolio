@@ -4,20 +4,22 @@
   <div id="alert"></div>
   <form class="row g-3 m-3" id="contactForm" method="POST" action="/test">
     <div class="col-md-6">
-      <label for="inputEmail4" class="form-label">Nom et prénom</label>
-      <input type="text" class="form-control" id="inputEmail4" />
+      <label for="inputNomPrenom" class="form-label">Nom et prénom</label>
+      <input type="text" class="form-control" id="inputNomPrenom" />
     </div>
     <div class="col-md-6">
-      <label for="inputEmail4" class="form-label">Email</label>
-      <input type="text" class="form-control" id="inputEmail4" />
+      <label for="inputEmail" class="form-label">Email</label>
+      <input type="email" class="form-control" id="inputEmail" />
     </div>
     <div class="col-md-8">
-      <label for="inputEmail4" class="form-label">Nom de l'entreprise</label>
-      <input type="text" class="form-control" id="inputEmail4" />
+      <label for="inputCompanyName" class="form-label"
+        >Nom de l'entreprise</label
+      >
+      <input type="text" class="form-control" id="inputCompanyName" />
     </div>
     <div class="col-md-4">
-      <label for="inputState" class="form-label">Secteur d'activité</label>
-      <select id="inputState" class="form-select">
+      <label for="inputSecteur" class="form-label">Secteur d'activité</label>
+      <select id="inputSecteur" class="form-select">
         <option selected>Choisir...</option>
         <option>Public</option>
         <option>Privé</option>
@@ -25,22 +27,22 @@
       </select>
     </div>
     <div class="col-md-4">
-      <label for="inputCity" class="form-label" required="required"
+      <label for="inputPhone" class="form-label" required="required"
         >Numéro de téléphone</label
       >
-      <input type="text" class="form-control" id="inputCity" />
+      <input type="text" class="form-control" id="inputPhone" />
     </div>
     <div class="col-md-4">
-      <label for="inputAddress" class="form-label">Pays</label>
+      <label for="inputCountry" class="form-label">Pays</label>
       <input
         type="text"
         class="form-control"
-        id="inputAddress"
+        id="inputCountry"
         placeholder="France, Espagne..." />
     </div>
     <div class="col-md-4">
-      <label for="inputAddress" class="form-label">Ville</label>
-      <input type="text" class="form-control" id="inputAddress" />
+      <label for="inputCity" class="form-label">Ville</label>
+      <input type="text" class="form-control" id="inputCity" />
     </div>
     <div class="form-group">
       <label for="exampleFormControlTextarea1">Example textarea</label>
@@ -73,40 +75,57 @@
       listInfoForm.forEach((elm) => {
         listDataForm.push(document.getElementById(elm.id).value);
       });
+
       let dataForm = {
         firstLatsName: listDataForm[0],
         email: listDataForm[1],
         companyName: listDataForm[2],
-        Country: listDataForm[4],
-        city: listDataForm[5],
-        phoneNumber: listDataForm[3],
-        text: listDataForm[6],
+        Country: listDataForm[5],
+        city: listDataForm[6],
+        phoneNumber: listDataForm[4],
+        text: listDataForm[7],
       };
+      if (
+        dataForm.email.length === 0
+        // ||       dataForm.phoneNumber.length === 0
+      ) {
+        document.getElementById("alert").innerHTML = alertHTML(
+          "danger",
+          `Problème d'enregistrement! l'adresse email est requise pour pouvoir vous contacter`
+        );
+        document.getElementById("inputEmail").style.backgroundColor =
+          "hsl(30, 100%, 50%)";
+      } else {
+        document.getElementById("inputEmail").style.backgroundColor = "white";
+        var fetchOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ data: dataForm }),
+        };
+        let data = await fetch("/contact/saveContact", fetchOptions);
+        let json = await data.json();
+        console.log(json);
+        if (json.status_code === 200) {
+          contactForm.reset();
+          document.getElementById("alert").innerHTML = alertHTML(
+            "success",
+            "Formulaire enregistré avec succèes!"
+          );
+        } else {
+          document.getElementById("alert").innerHTML = alertHTML(
+            "danger",
+            `Problème d'enregistrement sur le serveur !`
+          );
+        }
+      }
+    };
 
-      var fetchOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ data: dataForm }),
-      };
-      let data = await fetch("/contact/saveContact", fetchOptions);
-      let json = await data.json();
-      if (json.status_code === 200) {
-        contactForm.reset();
-        document.getElementById(
-          "alert"
-        ).innerHTML = `<div class="alert alert-success" role="alert">
-            Formulaire enregistré avec succèes!
-          </div>`;
-      }
-      if (json.status_code === 500) {
-        document.getElementById(
-          "alert"
-        ).innerHTML = `<div class="alert alert-danger" role="alert">
-            Problème d'enregistrement!
-          </div>`;
-      }
+    let alertHTML = (state, text) => {
+      return `<div class="alert alert-${state}" role="alert">
+       ${text}
+      </div>`;
     };
   </script>
 </div>

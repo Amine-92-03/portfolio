@@ -7,9 +7,9 @@ module.exports.getPageContact = async (req, res) => {
 };
 
 module.exports.saveContactData = async (req, res) => {
-  console.log(Object.keys(req.body.data).length);
+  // console.log(Object.keys(req.body.data).length);
   let dataContactForm = req.body.data;
-
+  console.log(req.body.data);
   try {
     contactModel.CreateNewContact(req.body.data);
     return res.status(200).json({
