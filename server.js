@@ -1,7 +1,7 @@
-const http = require("http");
+const https = require("https");
 const app = require("./app");
 const mongoose = require("mongoose");
-const server = http.createServer(app);
+const server = https.createServer(app);
 const nodemailer = require("nodemailer");
 
 require("dotenv").config();
@@ -28,5 +28,3 @@ mongoose
   .catch((err) => {
     console.log("Error in the Connection");
   });
-
-
