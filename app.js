@@ -20,6 +20,10 @@ app.get("/experience", experience.getData);
 app.get("/etudes", etudes.getData);
 app.get("/about", about.getData);
 app.get("/contact", conatct.getPageContact);
-app.post("/conatct/saveContact", conatct.saveContactData);
+app.post("/contact/saveContact", conatct.saveContactData);
+
+app.post("/test", (req, res) => {
+  console.log("req");
+});
 
 module.exports = app;

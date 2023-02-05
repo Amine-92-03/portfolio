@@ -1,18 +1,19 @@
 <%- include('layout/header') %>
 <div class="container">
   <h1>Formulaire de contact</h1>
-  <form class="row g-3 m-3" id="contactForm">
+  <div id="alert"></div>
+  <form class="row g-3 m-3" id="contactForm" method="POST" action="/test">
     <div class="col-md-6">
       <label for="inputEmail4" class="form-label">Nom et prénom</label>
-      <input type="email" class="form-control" id="inputEmail4" />
+      <input type="text" class="form-control" id="inputEmail4" />
     </div>
     <div class="col-md-6">
       <label for="inputEmail4" class="form-label">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" />
+      <input type="text" class="form-control" id="inputEmail4" />
     </div>
     <div class="col-md-8">
       <label for="inputEmail4" class="form-label">Nom de l'entreprise</label>
-      <input type="email" class="form-control" id="inputEmail4" />
+      <input type="text" class="form-control" id="inputEmail4" />
     </div>
     <div class="col-md-4">
       <label for="inputState" class="form-label">Secteur d'activité</label>
@@ -24,7 +25,9 @@
       </select>
     </div>
     <div class="col-md-4">
-      <label for="inputCity" class="form-label">Numéro de téléphone</label>
+      <label for="inputCity" class="form-label" required="required"
+        >Numéro de téléphone</label
+      >
       <input type="text" class="form-control" id="inputCity" />
     </div>
     <div class="col-md-4">
@@ -87,8 +90,23 @@
         },
         body: JSON.stringify({ data: dataForm }),
       };
-      const data = await fetch("/conatct/saveContact", fetchOptions);
-      contactForm.innerHTML = "<h1>Merci</h1>";
+      let data = await fetch("/contact/saveContact", fetchOptions);
+      let json = await data.json();
+      if (json.status_code === 200) {
+        contactForm.reset();
+        document.getElementById(
+          "alert"
+        ).innerHTML = `<div class="alert alert-success" role="alert">
+            Formulaire enregistré avec succèes!
+          </div>`;
+      }
+      if (json.status_code === 500) {
+        document.getElementById(
+          "alert"
+        ).innerHTML = `<div class="alert alert-danger" role="alert">
+            Problème d'enregistrement!
+          </div>`;
+      }
     };
   </script>
 </div>
