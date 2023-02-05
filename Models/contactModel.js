@@ -26,3 +26,8 @@ module.exports.CreateNewContact = (data) => {
       console.log(err.Message);
     });
 };
+
+module.exports.findIfEmailExits = async (email) => {
+  let res = await Contact.findOne({ email: email }).exec();
+  return res;
+};
