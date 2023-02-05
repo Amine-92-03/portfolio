@@ -20,7 +20,7 @@
     <div class="col-md-4">
       <label for="inputSecteur" class="form-label">Secteur d'activité</label>
       <select id="inputSecteur" class="form-select">
-        <option selected>Choisir...</option>
+        <!-- <option selected>Choisir...</option> -->
         <option>Public</option>
         <option>Privé</option>
         <option>ESN</option>
@@ -53,7 +53,11 @@
     </div>
     <div class="col-12">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck" />
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="gridCheck"
+          checked />
         <label class="form-check-label" for="gridCheck">
           je reconnais d'avoir pris connaissance que les information fournies
           sont utilisées pour la prise de contact
@@ -66,8 +70,10 @@
       </button>
     </div>
   </form>
+  <!-- Début du script pour gérer l'envoie des données client -->
   <script>
     let contactForm = document.getElementById("contactForm");
+
     contactForm.onsubmit = async () => {
       event.preventDefault();
       const listInfoForm = Array.from(contactForm.elements);
@@ -85,6 +91,7 @@
         phoneNumber: listDataForm[4],
         text: listDataForm[7],
       };
+      //  des conditions à satisfaire pour l'envoie
       if (
         dataForm.email.length === 0
         // ||       dataForm.phoneNumber.length === 0
@@ -95,30 +102,40 @@
         );
         document.getElementById("inputEmail").style.backgroundColor =
           "hsl(30, 100%, 50%)";
+        return false;
+      }
+      document.getElementById("inputEmail").style.backgroundColor = "white";
+      let checBx = document.getElementById("gridCheck");
+      if (!checBx.checked) {
+        document.getElementById("alert").innerHTML = alertHTML(
+          "danger",
+          `Vous devez etre d'accord avec la politique d'utilisation de vos données`
+        );
+        checBx.style.backgroundColor = "hsl(30, 100%, 50%)";
+        return false;
+      }
+
+      var fetchOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: dataForm }),
+      };
+      let data = await fetch("/contact/saveContact", fetchOptions);
+      let json = await data.json();
+      console.log(json);
+      if (json.status_code === 200) {
+        contactForm.reset();
+        document.getElementById("alert").innerHTML = alertHTML(
+          "success",
+          "Formulaire enregistré avec succèes!"
+        );
       } else {
-        document.getElementById("inputEmail").style.backgroundColor = "white";
-        var fetchOptions = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ data: dataForm }),
-        };
-        let data = await fetch("/contact/saveContact", fetchOptions);
-        let json = await data.json();
-        console.log(json);
-        if (json.status_code === 200) {
-          contactForm.reset();
-          document.getElementById("alert").innerHTML = alertHTML(
-            "success",
-            "Formulaire enregistré avec succèes!"
-          );
-        } else {
-          document.getElementById("alert").innerHTML = alertHTML(
-            "danger",
-            `Problème d'enregistrement sur le serveur !`
-          );
-        }
+        document.getElementById("alert").innerHTML = alertHTML(
+          "danger",
+          `Problème d'enregistrement sur le serveur !`
+        );
       }
     };
 
