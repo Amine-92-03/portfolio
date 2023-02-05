@@ -9,8 +9,10 @@ module.exports.getPageContact = async (req, res) => {
 };
 
 module.exports.saveContactData = async (req, res) => {
-  let email = req.body.data.email.toLowerCase();
+  let email = req.body.email.toLowerCase();
   // check if email exists ?
+
+  // console.log(req.body.data);
   let resp = await contactModel.findIfEmailExits(email);
   if (resp !== null) {
     try {

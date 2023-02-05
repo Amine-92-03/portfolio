@@ -85,9 +85,9 @@
         companyName: listDataForm[2],
         Country: listDataForm[5],
         city: listDataForm[6],
+        dateSaved: new Date(),
         phoneNumber: listDataForm[4],
         text: listDataForm[7],
-        dateSaved: new Date(),
       };
 
       //  des conditions à satisfaire pour l'envoie
@@ -119,7 +119,7 @@
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data: dataForm }),
+        body: JSON.stringify(dataForm),
       };
 
       let data = await fetch("/contact/saveContact", fetchOptions);
