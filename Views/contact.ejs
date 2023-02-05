@@ -45,11 +45,12 @@
       <input type="text" class="form-control" id="inputCity" />
     </div>
     <div class="form-group">
-      <label for="exampleFormControlTextarea1">Message</label>
+      <label for="exampleFormControlTextarea1">Message [300 caractères]</label>
       <textarea
         class="form-control"
         id="exampleFormControlTextarea1"
-        rows="3"></textarea>
+        rows="3"
+        maxlength="300"></textarea>
     </div>
     <div class="col-12">
       <div class="form-check form-switch">
@@ -80,12 +81,13 @@
 
       let dataForm = {
         firstLatsName: listDataForm[0],
-        email: listDataForm[1],
+        email: listDataForm[1].toLowerCase(),
         companyName: listDataForm[2],
         Country: listDataForm[5],
         city: listDataForm[6],
         phoneNumber: listDataForm[4],
         text: listDataForm[7],
+        dateSaved: new Date(),
       };
 
       //  des conditions à satisfaire pour l'envoie

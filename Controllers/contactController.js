@@ -1,6 +1,8 @@
 const mongoDb = require("mongodb");
 const contactModel = require("../Models/contactModel");
 
+// console.log(new Date("2023-02-05T16:25:06.826Z").toLocaleTimeString());
+
 module.exports.getPageContact = async (req, res) => {
   // contactModel.CreateNewContact();
   return res.render("contact", { title: "Amine contact" });
@@ -9,7 +11,9 @@ module.exports.getPageContact = async (req, res) => {
 module.exports.saveContactData = async (req, res) => {
   // console.log(Object.keys(req.body.data).length);
   let dataContactForm = req.body.data;
-  let email = req.body.data.email;
+
+  let email = req.body.data.email.toLowerCase();
+  // console.log(req.body.data.dateSaved);
   // check if email exists ?
 
   let resp = await contactModel.findIfEmailExits(email);

@@ -11,6 +11,7 @@ const contactForm = mongoose.Schema(
     city: String,
     phoneNumber: String,
     text: String,
+    dateSaved: Date,
   },
   { collection: "Contacts" }
 );
