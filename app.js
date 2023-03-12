@@ -26,4 +26,8 @@ app.post("/test", (req, res) => {
   console.log("req");
 });
 
+app.get("/test", (req, res) => {
+  res.send("HELLO");
+});
+
 module.exports = app;

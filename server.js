@@ -1,7 +1,7 @@
-const https = require("https");
+const http = require("http");
 const app = require("./app");
 const mongoose = require("mongoose");
-const server = https.createServer(app);
+const server = http.createServer(app);
 const nodemailer = require("nodemailer");
 
 require("dotenv").config();
@@ -28,3 +28,30 @@ mongoose
   .catch((err) => {
     console.log("Error in the Connection");
   });
+
+// configuration de la messagerie
+var transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.USER_MAIL,
+    pass: process.env.PASSWORD_MAIL,
+  },
+});
+
+var mailOptions = {
+  from: "bigdatamspr@gmail.com",
+  to: "bigdatamspr@gmail.com",
+  subject: "message",
+  // text: message,
+  html: `<h1>Bonjour Amine! Rapport de l'application :</h1><h4>'message'</h4>`,
+};
+
+transporter.sendMail(mailOptions, function (error, info) {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Email sent: ");
+  }
+});
+
+// console.log(transporter);
