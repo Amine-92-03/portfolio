@@ -22,12 +22,10 @@ app.get("/about", about.getData);
 app.get("/contact", conatct.getPageContact);
 app.post("/contact/saveContact", conatct.saveContactData);
 
-app.post("/test", (req, res) => {
-  console.log("req");
-});
-
-app.get("/test", (req, res) => {
-  res.send("HELLO");
+app.post("/testSave", (req, res) => {
+  console.log(req.body);
+  // res.redirect("/contact");
+  res.send("Thanks");
 });
 
 module.exports = app;

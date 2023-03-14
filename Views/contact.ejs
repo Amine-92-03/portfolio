@@ -2,24 +2,32 @@
 <div class="container">
   <h1>Formulaire de contact</h1>
   <div id="alert"></div>
-  <form class="row g-3 m-3" id="contactForm" method="POST" action="/test">
+  <form class="row g-3 m-3" id="contactForm" method="POST" action="/testSave">
     <div class="col-md-6">
       <label for="inputNomPrenom" class="form-label">Nom et prénom</label>
-      <input type="text" class="form-control" id="inputNomPrenom" />
+      <input
+        type="text"
+        name="inputNomPrenom"
+        class="form-control"
+        id="inputNomPrenom" />
     </div>
     <div class="col-md-6">
       <label for="inputEmail" class="form-label">Email</label>
-      <input type="email" class="form-control" id="inputEmail" />
+      <input type="email" name="email" class="form-control" id="inputEmail" />
     </div>
     <div class="col-md-8">
       <label for="inputCompanyName" class="form-label"
         >Nom de l'entreprise</label
       >
-      <input type="text" class="form-control" id="inputCompanyName" />
+      <input
+        type="text"
+        name="companyName"
+        class="form-control"
+        id="inputCompanyName" />
     </div>
     <div class="col-md-4">
       <label for="inputSecteur" class="form-label">Secteur d'activité</label>
-      <select id="inputSecteur" class="form-select">
+      <select id="inputSecteur" name="Secteur" class="form-select">
         <!-- <option selected>Choisir...</option> -->
         <option>Public</option>
         <option>Privé</option>
@@ -30,19 +38,20 @@
       <label for="inputPhone" class="form-label" required="required"
         >Numéro de téléphone</label
       >
-      <input type="text" class="form-control" id="inputPhone" />
+      <input type="text" class="form-control" name="Phone" id="inputPhone" />
     </div>
     <div class="col-md-4">
       <label for="inputCountry" class="form-label">Pays</label>
       <input
         type="text"
         class="form-control"
+        name="pays"
         id="inputCountry"
         placeholder="France, Espagne..." />
     </div>
     <div class="col-md-4">
       <label for="inputCity" class="form-label">Ville</label>
-      <input type="text" class="form-control" id="inputCity" />
+      <input type="text" name="city" class="form-control" id="inputCity" />
     </div>
     <div class="form-group">
       <label for="exampleFormControlTextarea1">Message [300 caractères]</label>
@@ -50,11 +59,12 @@
         class="form-control"
         id="exampleFormControlTextarea1"
         rows="3"
+        name="Text"
         maxlength="300"></textarea>
     </div>
     <div class="col-12">
       <div class="form-check form-switch">
-        <input type="checkbox" id="gridCheck" />
+        <input type="checkbox" name="ChekBox" id="gridCheck" />
         <label class="form-check-label" for="gridSCheck">
           je reconnais d'avoir pris connaissance que les information fournies
           sont utilisées pour la prise de contact
@@ -67,8 +77,10 @@
       </button>
     </div>
   </form>
+
+  
   <!-- Début du script pour gérer l'envoie des données client -->
-  <script>
+  <!-- <script>
     let contactForm = document.getElementById("contactForm");
 
     contactForm.onsubmit = async () => {
@@ -160,6 +172,6 @@
        ${text}
       </div>`;
     };
-  </script>
+  </script> -->
 </div>
 <%- include('layout/footer') %>
